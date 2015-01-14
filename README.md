@@ -69,6 +69,3 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means t
 11) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the valdiity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
 
 12) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
-
-
-3) 
