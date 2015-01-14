@@ -39,3 +39,10 @@ As seen from the command, the script takes in 7 commands. They are as follows:
 6) Output file contaiing result (which is called **ZINB_NB_Output_test_v2.txt** in the above example)
 
 7) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
+
+Output Explained
+------
+
+The output of the script contains information for all of the OTUs tested. Currently, there are 12 columns in the output file. They are as follows:
+
+1) 
