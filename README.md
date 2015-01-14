@@ -7,8 +7,15 @@ This is a simple script that performs negative binomial and zero-inflated negati
 
 The script is adjusted such that it can take in OTU table generated via QIIME from biom file as input and standard mapping/metadata file compatible with QIIME.
 
-Presently, the script can only perform a single category comparison for variables that have two levels. For example, if the 
-explanatory variable is temperature, it must only contain two levels such as High and Low for the script to run. Work is in progress to include comparisons for more than 2 levels. 
+Presently, the script can only perform a single category comparison for variables. For example, if the metadata have two
+variables such as diet and antibiotic exposure, the script will have to be run seperately for each variable. A joint model
+including both explanatory variables (i.e., diet and antibiotic exposure) cannot be currently calculated.
+
+Furthermore, the script can only work with variables that that have two levels. For example, if the 
+explanatory variable is temperature, it must only contain two levels such as High and Low for the script to run. 
+
+Work is in progress to include comparisons for more than 2 levels and to create models in which multiple combinations of 
+variables can be included.
 
 Running the script
 ------
