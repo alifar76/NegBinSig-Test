@@ -9,8 +9,12 @@ library(doMC)
 zinb_nb_test <- function(both,trt){
     all_data <- foreach(i=2:(length(both)-1), .combine = rbind) %dopar% {
         final_vec <- c()
-        result.zinb <- tryCatch(zeroinfl(both[ ,i] ~ trt | 1, data = both, dist = "negbin"),error=function(e) NULL)
-        result.nb <- tryCatch(glm.nb(both[ ,i] ~ trt, data = both),error=function(e) NULL)
+
+        form1 = as.formula(paste("both[ ,i] ~",trt,"| 1",sep=" "))              #both[ ,i] ~ trt | 1
+        form2 = as.formula(paste("both[ ,i] ~",trt,sep=" "))                    #both[ ,i] ~ trt
+
+        result.zinb <- tryCatch(zeroinfl(form1, data = both, dist = "negbin"),error=function(e) NULL)
+        result.nb <- tryCatch(glm.nb(form2, data = both),error=function(e) NULL)
         if (!is.null(result.zinb) && !is.null(result.nb)){
             zinb.coeff <- exp(summary(result.zinb)$coefficients$count[2,1])
             nb.coeff <- exp(summary(result.nb)$coefficients[2,1])
@@ -32,7 +36,7 @@ zinb_nb_test <- function(both,trt){
             final_vec <- c(NA,NA,NA,NA)
         }
         shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)		# Significant p-value indicates data is not normally distributed.
-        ttest <- t.test(both[,i] ~ trt, data=both)
+        ttest <- t.test(form2, data=both)
 		pval_ttest <- ttest$p.value
 		estimate_tab <- ttest$estimate
 		heading <- paste(gsub(" ","",strsplit(names(estimate_tab)[1],"mean in group")[[1]][2],fixed=TRUE),"_minus_",gsub(" ","",strsplit(names(estimate_tab)[2],"mean in group")[[1]][2],fixed=TRUE),"_mean",sep="")
@@ -44,9 +48,7 @@ zinb_nb_test <- function(both,trt){
 }
 
 
-data_organizer_and_result <- function(otutable,mapfile,categ1,categ2,metavariable,outputname,num){
- 
-    registerDoMC(as.numeric(num))   #change the 4 to your number of CPU cores  
+data_organizer_and_result <- function(otutable,mapfile,categ1,categ2,metavariable,outputname){  
 	MYdata <- read.table(otutable,header = T, sep = "\t", check.names = T, row.names =1, comment.char= "", skip =1)     # Ignore # at beginning of line. Skip first line which says "Converted from biom"
 	MYmeta <- read.table(mapfile,header = T, sep = "\t", check.names = T, comment.char= "")
  	allcols <- length(colnames(MYdata))
@@ -78,7 +80,8 @@ argv <- commandArgs(TRUE)
 
 
 
+registerDoMC(as.numeric(argv[7]))   #change the 4 to your number of CPU cores
 
-data_organizer_and_result(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6],argv[7])
+data_organizer_and_result(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6])
 
 print (Sys.time() - start.time)
