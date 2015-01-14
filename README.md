@@ -62,9 +62,9 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means t
 
 8) **Both_minus_Neither_mean**: The name of this column is specific to each dataset. In our metadata file, we had a column called Treatment which had two levels: Both and Neither. The ordering of the names of the treatment levels in this column will vary from mapping file to mapping file. However, they will be always be consistent such that if the value is positive, then the first level as suggested by column name has higher mean than second one (Both in our example). And if the value is negative, then the second level as suggested by column name has a higher mean than first one (Neither in our example).
 
-9) ttest_pval: p-value of the t-test
+9) **ttest_pval**: p-value of the t-test
 
-10) ttest_qval: q-value of the t-test
+10) **ttest_qval**: q-value of the t-test
 
 11) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the valdiity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
 
