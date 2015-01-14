@@ -56,7 +56,7 @@ The output of the script contains information for all of the OTUs tested. Curren
 4) **ZINB qval**: q-value of the estimated ZINB Coeff
 
 5) **NB_Coeff**: Indicates the exponentiated regression coefficient for the regular negative binomial model. To elaborate more,
-in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means that the abundance of OTU_26 is 1.685675928 times higher in the Neither group of treatment compared to the Both group of treatment. To find out which group is the base group, we look at the column called **Both_minus_Neither_mean**. In our example dataset, the **Both_minus_Neither_mean** column has the value of -2324.903642. This suggests that the mean OTU_26 is higher in Neither group when compared to Both group.
+in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means that the abundance of OTU_26 is 1.685675928 times higher in the Neither group of treatment compared to the Both group of treatment. To find out which group is the base group, we look at the column called **Both_minus_Neither_mean** for our example dataset. (The name of this group will change from mapping file to mapping file as explained later in detail) In our example dataset, the **Both_minus_Neither_mean** column has the value of -2324.903642. This suggests that the mean OTU_26 is higher in Neither group when compared to Both group.
 
 6) **NB_pval**: p-value of the estimated NB_Coeff
 
