@@ -47,8 +47,13 @@ The output of the script contains information for all of the OTUs tested. Curren
 
 1) OTU_ID: Indicates the OTU ID
 
-2) ZINB_Coeff: Indicates the exponentiated regression coefficient for the zero inflated negative binomial model. This value is the multiplicative change in OTU abundance, comparing one level of a specific treatment group to another. It is similar to the NB_Coeff value, which is explained further.
+2) ZINB_Coeff: Indicates the exponentiated regression coefficient for the zero inflated negative binomial model. This value is the multiplicative change in OTU abundance, comparing one level of a specific treatment group to another. It is to be interpreted in a similar way to the NB_Coeff value, which is explained further. For many OTUs, this value may turn out to be NA and it's okay if it does. It simply reflects that ZINB is not a good model to fit to data (mostly due to convergence issues).
 
-For example, in our example dataset, OTU_26
+3) ZINB_pval: p-value of the estimated ZINB Coeff
+
+4) ZINB qval: q-value of the estimated ZINB Coeff
+
+5) NB_Coeff: Indicates the exponentiated regression coefficient for the regular negative binomial model. To elaborate more,
+in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means that the abundance of OTU_26 is 1.685675928 times higher in the Neither group of treatment compared to the Both group of treatment. To find out which group is the base group, we look at the column called **Both_minus_Neither_mean**
 
 3) 
