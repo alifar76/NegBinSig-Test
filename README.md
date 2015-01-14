@@ -20,12 +20,15 @@ The script is run via command line using the Rscript command. To run the script,
 As seen from the command, the script takes in 7 commands. They are as follows:
 
 1) OTU table generated via QIIME (which is called **both_vs_neither_filter.txt** in the above example)
+
 2) QIIME compatible mapping file (which is called **neither_mapfile.txt** in the above example)
+
 3) Level 1 of the category being compared (which is called **Both** in the above example)
+
 4) Level 2 of the category being compared (which is called **Neither** in the above example)
+
 5) Column name of the category being compared as labelled in the mapping file (which is called **Treatment** in the above example)
+
 6) Output file contaiing result (which is called **ZINB_NB_Output_test_v2.txt** in the above example)
+
 7) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
-
-
-
