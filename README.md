@@ -22,17 +22,17 @@ Running the script
 
 The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
 
-```Rscript nb_test_script.R both_vs_neither_filter.txt both_neither_mapfile.txt Both Neither Treatment ZINB_NB_Output_test_v2.txt 2```
+```Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_test_v2.txt 2```
 
 As seen from the command, the script takes in 7 commands. They are as follows:
 
-1) OTU table generated via QIIME (which is called **both_vs_neither_filter.txt** in the above example)
+1) OTU table generated via QIIME (which is called **high_vs_low_otu_table.txt** in the above example)
 
-2) QIIME compatible mapping file (which is called **neither_mapfile.txt** in the above example)
+2) QIIME compatible mapping file (which is called **high_low_mapfile.txt** in the above example)
 
-3) Level 1 of the category being compared (which is called **Both** in the above example)
+3) Level 1 of the category being compared (which is called **High** in the above example)
 
-4) Level 2 of the category being compared (which is called **Neither** in the above example)
+4) Level 2 of the category being compared (which is called **Low** in the above example)
 
 5) Column name of the category being compared as labelled in the mapping file (which is called **Treatment** in the above example)
 
@@ -56,13 +56,13 @@ The output of the script contains information for all of the OTUs tested. Curren
 4) **ZINB qval**: q-value of the estimated ZINB Coeff
 
 5) **NB_Coeff**: Indicates the exponentiated regression coefficient for the regular negative binomial model. To elaborate more,
-in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means that the abundance of OTU_26 is 1.685675928 times higher in the Neither group of treatment compared to the Both group of treatment. To find out which group is the base group, we look at the column called **Both_minus_Neither_mean** for our example dataset. (The name of this group will change from mapping file to mapping file as explained later in detail) In our example dataset, the **Both_minus_Neither_mean** column has the value of -2324.903642. This suggests that the mean OTU_26 is higher in Neither group when compared to Both group.
+in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means that the abundance of OTU_26 is 1.685675928 times higher in the Low group of treatment compared to the High group of treatment. To find out which group is the base group, we look at the column called **High_minus_Low_mean** for our example dataset. (The name of this group will change from mapping file to mapping file as explained later in detail) In our example dataset, the **High_minus_Low_mean** column has the value of -2324.903642. This suggests that the mean OTU_26 is higher in Low group when compared to High group.
 
 6) **NB_pval**: p-value of the estimated NB_Coeff
 
 7) **NB_qval**: q-value of the estimated NB_Coeff
 
-8) **Both_minus_Neither_mean**: The name of this column is specific to each dataset. In our metadata file, we had a column called Treatment which had two levels: Both and Neither. The ordering of the names of the treatment levels in this column will vary from mapping file to mapping file. However, they will always be consistent such that if the value is positive, then the first level as suggested by column name has higher mean than second one (Both in our example). And if the value is negative, then the second level as suggested by column name has a higher mean than first one (Neither in our example).
+8) **High_minus_Low_mean**: The name of this column is specific to each dataset. In our metadata file, we had a column called Treatment which had two levels: High and Low. The ordering of the names of the treatment levels in this column will vary from mapping file to mapping file. However, they will always be consistent such that if the value is positive, then the first level as suggested by column name has higher mean than second one (High in our example). And if the value is negative, then the second level as suggested by column name has a higher mean than first one (Low in our example).
 
 9) **ttest_pval**: p-value of the t-test
 
