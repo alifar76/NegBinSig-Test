@@ -1,4 +1,4 @@
-#Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment Group_sig_new.txt 2
+#Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2
 
 start.time <- Sys.time()
 
@@ -79,6 +79,6 @@ argv <- commandArgs(TRUE)
 
 registerDoMC(as.numeric(argv[7]))   #change the 4 to your number of CPU cores
 
-data_organizer_and_result(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6])
+final_steps(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6])
 
 print (Sys.time() - start.time)
