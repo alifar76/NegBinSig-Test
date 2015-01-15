@@ -1,4 +1,4 @@
-OTU_IDs	ZINB_Coeff	ZINB_pval	ZINB_qval	NB_Coeff	NB_pval	NB_qval	Both_minus_Neither_mean	ttest_pval	ttest_qval	Shapiro_Wilk_Normality_pvalue	taxonomy
+OTU_IDs	ZINB_Coeff	ZINB_pval	ZINB_qval	NB_Coeff	NB_pval	NB_qval	High_minus_Low_mean	ttest_pval	ttest_qval	Shapiro_Wilk_Normality_pvalue	taxonomy
 OTU_74	NA	NA	NA	0.752717491607334	0.210435899375811	0.353104305732293	546.395224229037	0.534968686826472	0.770640100910972	1.91966540497787e-20	k__Bacteria: p__Actinobacteria: c__Actinobacteria: o__Actinomycetales: f__Brevibacteriaceae: g__Brevibacterium: s__paucivorans
 OTU_26	NA	NA	NA	1.68567592816429	0.0311365638292169	0.100484123729739	-2324.90364184357	0.181754963494975	0.681607236662688	1.91109650797003e-21	k__Bacteria: p__Firmicutes: c__Clostridia: o__Clostridiales: f__Ruminococcaceae: g__Faecalibacterium: s__prausnitzii
 OTU_40317	NA	NA	NA	1.4401050743444	0.0732520834955317	0.179060648544633	-465.344988877234	0.142925716146585	0.681607236662688	8.32806571697464e-18	k__Bacteria: p__Cyanobacteria: c__Chloroplast: o__Streptophyta: f__: g__: s__
