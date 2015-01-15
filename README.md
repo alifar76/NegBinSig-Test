@@ -14,8 +14,7 @@ including both explanatory variables (i.e., diet and antibiotic exposure) cannot
 Furthermore, the script can only work with variables that that have two levels. For example, if the 
 explanatory variable is temperature, it must only contain two levels such as High and Low for the script to run. 
 
-Work is in progress to include comparisons for more than 2 levels and to create models in which multiple combinations of 
-variables can be included.
+Work is in progress to include comparisons for more than 2 levels and to create models in which multiple combinations of explanatory variables can be included.
 
 Running the script
 ------
