@@ -1,3 +1,5 @@
+#Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment Group_sig_new.txt 2
+
 start.time <- Sys.time()
 
 library(pscl)
@@ -5,76 +7,71 @@ library(MASS)
 library(foreach)
 library(doMC)
 
+ 
+data_load <- function(MYdata,mapfile,treatment,trt1,trt2){    
+  colnames(MYdata)
+  MYmeta <- read.table(mapfile,header = T, sep = "\t", check.names = F, comment.char= "") #change Group header to Treatment
+  colnames(MYmeta)
+  allcols <- length(colnames(MYdata))
+  MYdata <- MYdata[,order(names(MYdata))]
+  MYdata2 <- MYdata[,1:(allcols-1)]
+  MYdata2 <- MYdata2[,order(names(MYdata2))]
+  MYmeta <- MYmeta[order(MYmeta[,"#SampleID"]), ]
+  matrix1 <- MYdata2[c(as.factor(MYmeta[,"#SampleID"][MYmeta[,treatment]==trt1]))] # change whichever group you are testing
+  matrix2 <- MYdata2[c(as.factor(MYmeta[,"#SampleID"][MYmeta[,treatment]==trt2]))] # change whichever group you are testing
+  matrix3 <- cbind(matrix1,matrix2)
+  mat.array <- t(matrix3)
+  both <- merge(mat.array,MYmeta,by.x=0,by.y="#SampleID")
+}
+ 
 
-zinb_nb_test <- function(both,trt){
-    all_data <- foreach(i=2:(length(both)-1), .combine = rbind) %dopar% {
-        final_vec <- c()
+zinb_nb_test <- function(both,MYdata,trt){
+  all_data <- foreach(i=2:(length(rownames(MYdata))+1), .combine = rbind) %dopar% {
+    final_vec <- c()
+    formula1 <- as.formula(paste("both[,i] ~ ",trt," | 1",sep=""))
+    formula2 <- as.formula(paste("both[,i] ~ ",trt,sep=""))
+    result.zinb <- tryCatch(zeroinfl(formula1, data = both, dist = "negbin"),error=function(e) NA)
+    result.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA)
+    zinb.coeff <- tryCatch(exp(summary(result.zinb)$coefficients$count[2,1]),error=function(e) NA)
+    nb.coeff <- tryCatch(exp(summary(result.nb)$coefficients[2,1]),error=function(e) NA)
+    zinb.pval <- tryCatch(summary(result.zinb)$coefficients$count[2,4],error=function(e) NA)
+    nb.pval <- tryCatch(summary(result.nb)$coefficients[2,4],error=function(e) NA)
+    final_vec <- c(zinb.coeff,zinb.pval,nb.coeff,nb.pval)
+    shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)       # Significant p-value indicates data is not normally distributed.
+    pval_ttest <- tryCatch(t.test(formula2, data=both)$p.value,error=function(e) NA)
+    estimate_tab <- tryCatch(t.test(formula2, data=both)$estimate,error=function(e) NA)
+    heading <- paste(gsub(" ","",strsplit(names(estimate_tab)[1],"mean in group")[[1]][2],fixed=TRUE),"_minus_",gsub(" ","",strsplit(names(estimate_tab)[2],"mean in group")[[1]][2],fixed=TRUE),"_mean",sep="")
+    mean_diff <- tryCatch((estimate_tab[1][[1]] - estimate_tab[2][[1]]),error=function(e) NA)
+      
+    final_vec <- c(final_vec,mean_diff,pval_ttest,shap_wilk_pval,heading,estimate_tab[1][[1]],names(estimate_tab)[1],estimate_tab[2][[1]],names(estimate_tab)[2])
+    final_vec
+  }
+  return (all_data)
+}
+ 
 
-        form1 = as.formula(paste("both[ ,i] ~",trt,"| 1",sep=" "))              #both[ ,i] ~ trt | 1
-        form2 = as.formula(paste("both[ ,i] ~",trt,sep=" "))                    #both[ ,i] ~ trt
-
-        result.zinb <- tryCatch(zeroinfl(form1, data = both, dist = "negbin"),error=function(e) NULL)
-        result.nb <- tryCatch(glm.nb(form2, data = both),error=function(e) NULL)
-        if (!is.null(result.zinb) && !is.null(result.nb)){
-            zinb.coeff <- exp(summary(result.zinb)$coefficients$count[2,1])
-            nb.coeff <- exp(summary(result.nb)$coefficients[2,1])
-            zinb.pval <- summary(result.zinb)$coefficients$count[2,4]
-            nb.pval <- summary(result.nb)$coefficients[2,4]
-            final_vec <- c(zinb.coeff,zinb.pval,nb.coeff,nb.pval)
-        }
-        if (is.null(result.zinb) && !is.null(result.nb)){
-            nb.coeff <- exp(summary(result.nb)$coefficients[2,1])
-            nb.pval <- summary(result.nb)$coefficients[2,4]
-            final_vec <- c(NA,NA,nb.coeff,nb.pval)
-        }
-        if (!is.null(result.zinb) && is.null(result.nb)){
-            zinb.coeff <- exp(summary(result.zinb)$coefficients$count[2,1])
-            zinb.pval <- summary(result.zinb)$coefficients$count[2,4]
-            final_vec <- c(zinb.coeff,zinb.pval,NA,NA)
-        }
-        if (is.null(result.zinb) && is.null(result.nb)){
-            final_vec <- c(NA,NA,NA,NA)
-        }
-        shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)		# Significant p-value indicates data is not normally distributed.
-        ttest <- t.test(form2, data=both)
-		pval_ttest <- ttest$p.value
-		estimate_tab <- ttest$estimate
-		heading <- paste(gsub(" ","",strsplit(names(estimate_tab)[1],"mean in group")[[1]][2],fixed=TRUE),"_minus_",gsub(" ","",strsplit(names(estimate_tab)[2],"mean in group")[[1]][2],fixed=TRUE),"_mean",sep="")
-		mean_diff <- estimate_tab[1][[1]] - estimate_tab[2][[1]]
-      	final_vec <- c(final_vec,mean_diff,pval_ttest,shap_wilk_pval,heading)
-        final_vec
-    }
-    return (all_data)
+final_steps <- function(otutable,mapfile,categ1,categ2,trt,outputname){
+  MYdata <- read.table(otutable,header = T, sep = "\t", check.names = F, row.names =1, comment.char= "", skip =1,quote="")
+  both <- data_load(MYdata,mapfile,trt,categ1,categ2)
+  all_data <- zinb_nb_test(both,MYdata,trt)
+  allcols <- length(colnames(MYdata))
+ 
+  zinb.qval <- p.adjust(all_data[,2], method = "fdr")
+  nb.qval <-  p.adjust(all_data[,4], method = "fdr")
+  ttest.qval <- p.adjust(all_data[,6], method = "fdr")
+  taxonomy <- MYdata[allcols]
+  otuids <- colnames(both)[2:(length(colnames(both))-1)]
+  taxlabels <- as.vector(taxonomy[,1])
+  difflabel <- unique(all_data[,8])
+ 
+  mean1_head <- unique(all_data[,10])
+  mean2_head <- unique(all_data[,12])
+ 
+  all_data <- cbind(otuids,all_data[,1:2],zinb.qval,all_data[,3:4],nb.qval,all_data[,9],all_data[,11],all_data[,5:6],ttest.qval,all_data[,7],taxlabels)
+  colnames(all_data) <- c("OTU_IDs","ZINB_Coeff","ZINB_pval","ZINB_qval","NB_Coeff","NB_pval","NB_qval",mean1_head,mean2_head,difflabel,"ttest_pval","ttest_qval","Shapiro_Wilk_Normality_pvalue","taxonomy") #change Difference to groups being tested
+  write.table(as.matrix(all_data),file=outputname,sep="\t",append = TRUE,col.names=TRUE,row.names=FALSE,quote=FALSE)
 }
 
-
-data_organizer_and_result <- function(otutable,mapfile,categ1,categ2,metavariable,outputname){  
-	MYdata <- read.table(otutable,header = T, sep = "\t", check.names = T, row.names =1, comment.char= "", skip =1)     # Ignore # at beginning of line. Skip first line which says "Converted from biom"
-	MYmeta <- read.table(mapfile,header = T, sep = "\t", check.names = T, comment.char= "")
- 	allcols <- length(colnames(MYdata))
-    MYdata <- MYdata[,order(names(MYdata))]
-    
-    MYdata2 <- MYdata[,1:(allcols-1)]
-    MYdata2 <- MYdata2[,order(names(MYdata2))]
-    MYmeta <- MYmeta[order(MYmeta[,"X.SampleID"]), ]
-    matrix1 <- MYdata2[c(as.factor(MYmeta[,"X.SampleID"][MYmeta[,metavariable]==categ1]))]
-    matrix2 <- MYdata2[c(as.factor(MYmeta[,"X.SampleID"][MYmeta[,metavariable]==categ2]))]
-    matrix3 <- cbind(matrix1,matrix2)
-    mat.array <- t(matrix3)
-    both <- merge(mat.array,MYmeta,by.x=0,by.y="X.SampleID")
-    
-    all_data <- zinb_nb_test(both,metavariable)
-    zinb.qval <- p.adjust(all_data[,2], method = "fdr")
-    nb.qval <-  p.adjust(all_data[,4], method = "fdr")
-    ttest.qval <- p.adjust(all_data[,6], method = "fdr") 
-    taxonomy <- MYdata[allcols]
-    otuids <- colnames(both)[2:(length(colnames(both))-1)]
-    taxlabels <- as.vector(taxonomy[,1])
-    difflabel <- unique(all_data[,8])
-    all_data <- cbind(otuids,all_data[,1:2],zinb.qval,all_data[,3:4],nb.qval,all_data[,5:6],ttest.qval,all_data[,7],taxlabels)
-    colnames(all_data) <- c("OTU_IDs","ZINB_Coeff","ZINB_pval","ZINB_qval","NB_Coeff","NB_pval","NB_qval",difflabel,"ttest_pval","ttest_qval","Shapiro_Wilk_Normality_pvalue","taxonomy")
-    write.table(as.matrix(all_data),file=outputname,sep="\t",append = TRUE,col.names=TRUE,row.names=FALSE,quote=FALSE)
-}
 
 argv <- commandArgs(TRUE)
 
