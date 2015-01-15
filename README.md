@@ -21,7 +21,7 @@ Running the script
 
 The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
 
-```Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_test_v2.txt 2```
+```Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2```
 
 As seen from the command, the script takes in 7 commands. They are as follows:
 
@@ -35,7 +35,7 @@ As seen from the command, the script takes in 7 commands. They are as follows:
 
 5) Column name of the category being compared as labelled in the mapping file (which is called **Treatment** in the above example)
 
-6) Output file contaiing result (which is called **ZINB_NB_Output_test_v2.txt** in the above example)
+6) Output file contaiing result (which is called **ZINB_NB_Output_result.txt** in the above example)
 
 7) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
 
