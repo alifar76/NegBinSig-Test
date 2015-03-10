@@ -41,6 +41,11 @@ As seen from the command, the script takes in 7 commands. They are as follows:
 
 Please ensure that all the 7 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
 
+Input file format
+------
+
+Input of file format should be one compatabile with QIIME. However, please ensure that the sample IDs are not numeric. That is, the sample IDs should not be like: 1560.1, 1561.1, 1559.1, etc. If such is the case, please slightly modify the sample IDs in both the mapping file and OTU table by adding any alphabet. So, for example, sample ID 1560.1 will become p1560.1.
+
 Output Explained
 ------
 
