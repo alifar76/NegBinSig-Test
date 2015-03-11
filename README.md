@@ -49,7 +49,7 @@ Input of file format should be one compatabile with QIIME. However, please ensur
 Output Explained
 ------
 
-The output of the script contains information for all of the OTUs tested. Currently, there are 14 columns in the output file generated via this script. The columns and their descriptions with respect to the example output file created are as follows:
+The output of the script contains information for all of the OTUs tested. Currently, there are 16 columns in the output file generated via this script. The columns and their descriptions with respect to the example output file created are as follows:
 
 1) **OTU_ID**: Indicates the OTU ID
 
@@ -76,6 +76,10 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 
 12) **ttest_qval**: q-value of the t-test
 
-13) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
+13) **KW_pval**: Kruskal-Wallis pvalue
 
-14) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
+14) **KW_qval**: Kruskal-Wallis qvalue
+
+15) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
+
+16) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
