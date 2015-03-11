@@ -41,10 +41,15 @@ As seen from the command, the script takes in 7 commands. They are as follows:
 
 Please ensure that all the 7 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
 
+Input file format
+------
+
+Input of file format should be one compatabile with QIIME. However, please ensure that the sample IDs are not numeric. That is, the sample IDs should not be like: 1560.1, 1561.1, 1559.1, etc. If such is the case, please slightly modify the sample IDs in both the mapping file and OTU table by adding any alphabet. So, for example, sample ID 1560.1 will become p1560.1.
+
 Output Explained
 ------
 
-The output of the script contains information for all of the OTUs tested. Currently, there are 12 columns in the output file. They are as follows:
+The output of the script contains information for all of the OTUs tested. Currently, there are 14 columns in the output file generated via this script. The columns and their descriptions with respect to the example output file created are as follows:
 
 1) **OTU_ID**: Indicates the OTU ID
 
@@ -55,18 +60,22 @@ The output of the script contains information for all of the OTUs tested. Curren
 4) **ZINB qval**: q-value of the estimated ZINB Coeff
 
 5) **NB_Coeff**: Indicates the exponentiated regression coefficient for the regular negative binomial model. To elaborate more,
-in our example dataset, OTU_26 has a NB_Coeff value of 1.685675928. This means that the abundance of OTU_26 is 1.685675928 times higher in the Low group of treatment compared to the High group of treatment. To find out which group is the base group, we look at the column called **High_minus_Low_mean** for our example dataset. (The name of this group will change from mapping file to mapping file as explained later in detail) In our example dataset, the **High_minus_Low_mean** column has the value of -2324.903642. This suggests that the mean OTU_26 is higher in Low group when compared to High group.
+in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means that the abundance of OTU_26 is 1.329890281 times higher in the Low group of treatment compared to the High group of treatment. To find out which group is the base group, we look at the column called **High_minus_Low_mean** for our example dataset. (The name of this group will change from mapping file to mapping file as explained later in detail) In our example dataset, the **High_minus_Low_mean** column has the value of -176.8338789. This suggests that the mean OTU_26 is higher in Low group when compared to High group.
 
 6) **NB_pval**: p-value of the estimated NB_Coeff
 
 7) **NB_qval**: q-value of the estimated NB_Coeff
 
-8) **High_minus_Low_mean**: The name of this column is specific to each dataset. In our metadata file, we had a column called Treatment which had two levels: High and Low. The ordering of the names of the treatment levels in this column will vary from mapping file to mapping file. However, they will always be consistent such that if the value is positive, then the first level as suggested by column name has higher mean than second one (High in our example). And if the value is negative, then the second level as suggested by column name has a higher mean than first one (Low in our example).
+8) **mean in group High**: The mean of a specific OTU in a samples belonging to specific one treatment level. (The name of this column will change base on user defined mapping file).
 
-9) **ttest_pval**: p-value of the t-test
+9) **mean in group Low**: The mean of a specific OTU in a samples belonging to specific the other treatment level. (The name of this column will change base on user defined mapping file).
 
-10) **ttest_qval**: q-value of the t-test
+10) **High_minus_Low_mean**: The name of this column is specific to each dataset. In our metadata file, we had a column called Treatment which had two levels: High and Low. The ordering of the names of the treatment levels in this column will vary from mapping file to mapping file. However, they will always be consistent such that if the value is positive, then the first level as suggested by column name has higher mean than second one (High in our example). And if the value is negative, then the second level as suggested by column name has a higher mean than first one (Low in our example).
 
-11) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
+11) **ttest_pval**: p-value of the t-test
 
-12) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
+12) **ttest_qval**: q-value of the t-test
+
+13) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
+
+14) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
