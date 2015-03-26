@@ -21,7 +21,7 @@ Running the script
 
 The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
 
-```Rscript nb_testing.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt filtered_outliers_high_low.txt 2```
+```Rscript nb_regression_outlier_filtering.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt filtered_outliers_high_low.txt 2```
 
 As seen from the command, the script takes in 8 commands. They are as follows:
 
