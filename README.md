@@ -51,7 +51,7 @@ Input of file format should be one compatabile with QIIME. However, please ensur
 Output Explained
 ------
 
-The output of the script contains information for all of the OTUs tested. Currently, there are 16 columns in the output file generated via this script. The columns and their descriptions with respect to the example output file created are as follows:
+The output of the script contains information for all of the OTUs tested. Currently, there are 26 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
 
 1) **OTU_ID**: Indicates the OTU ID
 
@@ -74,14 +74,34 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 
 10) **High_minus_Low_mean**: The name of this column is specific to each dataset. In our metadata file, we had a column called Treatment which had two levels: High and Low. The ordering of the names of the treatment levels in this column will vary from mapping file to mapping file. However, they will always be consistent such that if the value is positive, then the first level as suggested by column name has higher mean than second one (High in our example). And if the value is negative, then the second level as suggested by column name has a higher mean than first one (Low in our example).
 
-11) **ttest_pval**: p-value of the t-test
+11) **ttest_pval**: p-value of the t-test.
 
-12) **ttest_qval**: q-value of the t-test
+12) **ttest_qval**: q-value of the t-test.
 
-13) **KW_pval**: Kruskal-Wallis pvalue
+13) **KW_pval**: Kruskal-Wallis pvalue.
 
-14) **KW_qval**: Kruskal-Wallis qvalue
+14) **KW_qval**: Kruskal-Wallis qvalue.
 
-15) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
+15) **NB_Coeff_Estimate_Error**: Indicates (with yes/no) whether there was in error in convergence in estimating the negative binomial regression coefficient.
 
-16) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
+16) **# of 0's in High**: Indicates the total # of zeroes in one treatment group (such as High).
+
+17) **# of 0's in Low**: Indicates the total # of zeroes in the other treatment group (such as Low).
+
+18) **# of non-zeroes in High**: Indicates the total number of non-zero entries in one treatment group (such as High).
+
+19) **# of non-zeroes in Low**: Indicates the total number of non-zero entries in other treatment group (such as Low).
+
+20) **Total count in High**: Sum of all values in one treatment group (such as High).
+
+21) **Total count in Low**: Sum of all values in other treatment group (such as Low).
+
+22) **mean_otu**: Mean across all treatment groups (both High and Low).
+
+23) **variance_otu**: Variance across all treatment groups (both High and Low).
+
+24) **var/mean ratio**: Variance to mean ration across all treatment groups (such as High and Low).
+
+25) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
+
+26) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
