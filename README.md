@@ -21,9 +21,9 @@ Running the script
 
 The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
 
-```Rscript nb_test_script.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2```
+```Rscript nb_testing.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt filtered_outliers_high_low.txt 2```
 
-As seen from the command, the script takes in 7 commands. They are as follows:
+As seen from the command, the script takes in 8 commands. They are as follows:
 
 1) OTU table generated via QIIME (which is called **high_vs_low_otu_table.txt** in the above example)
 
@@ -37,7 +37,9 @@ As seen from the command, the script takes in 7 commands. They are as follows:
 
 6) Output file contaiing result (which is called **ZINB_NB_Output_result.txt** in the above example)
 
-7) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
+7) Output file containing only those OTUs that turn out significant after filtering for outliers (which is called **filtered_outliers_high_low.txt** in the above example)
+
+8) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
 
 Please ensure that all the 7 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
 
