@@ -41,7 +41,7 @@ As seen from the command, the script takes in 8 commands. They are as follows:
 
 8) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
 
-Please ensure that all the 7 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
+Please ensure that all the 8 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
 
 Input file format
 ------
