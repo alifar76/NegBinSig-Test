@@ -37,7 +37,7 @@ As seen from the command, the script takes in 8 commands. They are as follows:
 
 6) Output file contaiing result (which is called **ZINB_NB_Output_result.txt** in the above example)
 
-7) Output file containing only those OTUs that turn out significant after filtering for outliers (which is called **filtered_outliers_high_low.txt** in the above example)
+7) Output file containing only those OTUs that turn out significant after filtering for outliers (which is called **filtered_outliers_high_low.txt** in the above example). An outlier for a specific OTU is defined as that count value for the OTU which is greater than 5 times the inter-quartile range of the OTU across all samples.
 
 8) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
 
