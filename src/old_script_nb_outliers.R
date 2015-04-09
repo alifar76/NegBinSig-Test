@@ -1,4 +1,5 @@
-#Rscript nb_regression_outlier_filtering_v2.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2
+#Rscript nb_testing.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt filtered_outliers_high_low.txt 2
+
 
 start.time <- Sys.time()
 
@@ -57,12 +58,8 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
     var.otu <- var(both[,i])
     var.mean.ratio <- var.otu/mean.otu
     
-    newd <- both[,i][-(which(both[,i] > 5*IQR(both[,i])))]       # Select indices of values that are not greater than 5 times the IQR (i.e., values > 5*IQR will be removed)
-	 treatment <- as.vector(both[,trt])
-	 newmeta <- treatment[-(which(both[,i] > 5*IQR(both[,i])))]    # Select values greater than 5 times the IQR
-	 newpval_nb <- tryCatch(summary(glm.nb(newd ~ newmeta))$coefficients[2,4],error=function(e) NA)
-
-    final_vec <- c(final_vec,mean_diff,pval_ttest,shap_wilk_pval,heading,estimate_tab[1][[1]],names(estimate_tab)[1],estimate_tab[2][[1]],names(estimate_tab)[2],kwtest,valwarn.nb,zerotrt1,zerotrt2,nonzerotrt1,nonzerotrt2,totaltrt1,totaltrt2,mean.otu,var.otu,var.mean.ratio,newpval_nb)
+      
+    final_vec <- c(final_vec,mean_diff,pval_ttest,shap_wilk_pval,heading,estimate_tab[1][[1]],names(estimate_tab)[1],estimate_tab[2][[1]],names(estimate_tab)[2],kwtest,valwarn.nb,zerotrt1,zerotrt2,nonzerotrt1,nonzerotrt2,totaltrt1,totaltrt2,mean.otu,var.otu,var.mean.ratio)
     final_vec
   }
   return (all_data)
@@ -78,7 +75,6 @@ final_steps <- function(otutable,mapfile,categ1,categ2,trt,outputname){
   nb.qval <-  p.adjust(all_data[,4], method = "fdr")
   ttest.qval <- p.adjust(all_data[,6], method = "fdr")
   kw.qval <- p.adjust(all_data[,13], method = "fdr")
-  outlier_filt_qval <- p.adjust(all_data[,24], method = "fdr")
   taxonomy <- MYdata[allcols]
   otuids <- colnames(both)[2:(length(colnames(both))-1)]
   taxlabels <- as.vector(taxonomy[,1])
@@ -91,16 +87,53 @@ final_steps <- function(otutable,mapfile,categ1,categ2,trt,outputname){
  nzrtrt2 <- paste("# of non-zeroes in ",categ2,sep="")
  tottrt1 <- paste("Total count in ",categ1,sep="")
  totttrt2 <- paste("Total count in ",categ2,sep="")
-  all_data <- cbind(otuids,all_data[,1:2],zinb.qval,all_data[,3:4],nb.qval,all_data[,9],all_data[,11],all_data[,5:6],ttest.qval,all_data[,13],kw.qval,all_data[,14:23],all_data[,7],taxlabels,all_data[,24],outlier_filt_qval)
-  colnames(all_data) <- c("OTU_IDs","ZINB_Coeff","ZINB_pval","ZINB_qval","NB_Coeff","NB_pval","NB_qval",mean1_head,mean2_head,difflabel,"ttest_pval","ttest_qval","KW_pval","KW_qval","NB_Coeff_Estimate_Error",zrtrt1,zrtrt2,nzrtrt1,nzrtrt2,tottrt1,totttrt2,"mean_otu","variance_otu","var/mean ratio","Shapiro_Wilk_Normality_pvalue","taxonomy","outlier_nbpval","outlier_nbqval") #change Difference to groups being tested
+  all_data <- cbind(otuids,all_data[,1:2],zinb.qval,all_data[,3:4],nb.qval,all_data[,9],all_data[,11],all_data[,5:6],ttest.qval,all_data[,13],kw.qval,all_data[,14:23],all_data[,7],taxlabels)
+  colnames(all_data) <- c("OTU_IDs","ZINB_Coeff","ZINB_pval","ZINB_qval","NB_Coeff","NB_pval","NB_qval",mean1_head,mean2_head,difflabel,"ttest_pval","ttest_qval","KW_pval","KW_qval","NB_Coeff_Estimate_Error",zrtrt1,zrtrt2,nzrtrt1,nzrtrt2,tottrt1,totttrt2,"mean_otu","variance_otu","var/mean ratio","Shapiro_Wilk_Normality_pvalue","taxonomy") #change Difference to groups being tested
   write.table(as.matrix(all_data),file=outputname,sep="\t",append = TRUE,col.names=TRUE,row.names=FALSE,quote=FALSE)
+}
+
+
+iqr_filtering <- function(otutab,mapfile,initresult,metavar,categ1,categ2,outfile){
+  # Read OTU table and meta-data file
+  otutable <- read.table(otutab,header = T, sep = "\t", check.names = F, row.names =1, comment.char= "", skip =1,quote="")
+  # Read NB results file
+  nbresult <- read.table(initresult,header = T, sep = "\t", check.names = F, comment.char= "",quote="") #change Group header to Treatment
+  # Indices of OTUs that have q-value less than 0.05 and give no error in estimated NB Coeff
+  inds <- which(nbresult[,"NB_qval"] < 0.05 & nbresult[,"NB_Coeff_Estimate_Error"] == 'no')
+  # Only significant OTUs
+  signifotus <- nbresult[inds,]
+  otuselect <- as.vector(signifotus[,"OTU_IDs"])
+  # Load meta-data and OTU table merged
+  otumetaload <- data_load(otutable,mapfile,metavar,categ1,categ2)
+  treatment <- as.vector(otumetaload[,metavar])
+  # Select OTU count data of OTUs declared significant
+  otusindat <- otumetaload[,otuselect]
+  entry <- length(nbresult[1,])+1
+  mat <- matrix(ncol=entry)
+  count <- 1
+  for (i in colnames(otusindat)){
+    dataf <- otusindat[,i]
+    newd <- dataf[-(which(dataf > 5*IQR(dataf)))]
+    newmeta <- treatment[-(which(dataf > 5*IQR(dataf)))]    # Select values greater than 5 times the IQR
+    newpval_nb <- tryCatch(summary(glm.nb(newd ~ newmeta))$coefficients[2,4],error=function(e) NA)
+    oldpval <- nbresult[which(nbresult[,"OTU_IDs"] == i),]$NB_pval
+    if (!is.na(newpval_nb) && (newpval_nb < 0.05)) {
+      mat[count,] <- t(append(as.vector(t(nbresult[which(nbresult[,"OTU_IDs"] == i),])[,1]),newpval_nb))
+      count <- count + 1
+      mat <- rbind(mat,matrix(ncol=entry))  
+    }
+  }
+  mat <- mat[-nrow(mat),]
+  colnames(mat) <- c(colnames(nbresult),"newpval_nb")
+  write.table(mat, outfile, append = FALSE, quote = FALSE, sep = "\t",row.names = FALSE,col.names = TRUE)
 }
 
 
 
 argv <- commandArgs(TRUE)
 
-registerDoMC(as.numeric(argv[7]))   #change the 4 to your number of CPU cores
+registerDoMC(as.numeric(argv[8]))   #change the 4 to your number of CPU cores
 final_steps(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6])
+iqr_filtering(argv[1],argv[2],argv[6],argv[5],argv[3],argv[4],argv[7])
 print (Sys.time() - start.time)
 
