@@ -19,9 +19,9 @@ Work is in progress to include comparisons for more than 2 levels and to create 
 Running the script
 ------
 
-There are two scripts in the folder src. The one to use is called ```nb_regression_outlier_filtering_v2.R```. The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
+There are two scripts in the folder src. The one to use is called ```nb_regression_outlier_filtering.R```. The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
 
-```Rscript nb_regression_outlier_filtering_v2.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2```
+```Rscript nb_regression_outlier_filtering.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2```
 
 As seen from the command, the script takes in 7 commands. They are as follows:
 
