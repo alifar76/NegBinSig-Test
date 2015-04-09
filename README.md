@@ -19,11 +19,11 @@ Work is in progress to include comparisons for more than 2 levels and to create 
 Running the script
 ------
 
-The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
+There are two scripts in the folder src. The one to use is called ```nb_regression_outlier_filtering_v2.R```. The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
 
-```Rscript nb_regression_outlier_filtering.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt filtered_outliers_high_low.txt 2```
+```Rscript nb_regression_outlier_filtering_v2.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2```
 
-As seen from the command, the script takes in 8 commands. They are as follows:
+As seen from the command, the script takes in 7 commands. They are as follows:
 
 1) OTU table generated via QIIME (which is called **high_vs_low_otu_table.txt** in the above example)
 
@@ -37,9 +37,7 @@ As seen from the command, the script takes in 8 commands. They are as follows:
 
 6) Output file contaiing result (which is called **ZINB_NB_Output_result.txt** in the above example)
 
-7) Output file containing only those OTUs that turn out significant after filtering for outliers (which is called **filtered_outliers_high_low.txt** in the above example). An outlier for a specific OTU is defined as that count value for the OTU which is greater than 5 times the inter-quartile range of the OTU across all samples.
-
-8) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
+7) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
 
 Please ensure that all the 8 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
 
@@ -48,10 +46,12 @@ Input file format
 
 Input of file format should be one compatabile with QIIME. However, please ensure that the sample IDs are not numeric. That is, the sample IDs should not be like: 1560.1, 1561.1, 1559.1, etc. If such is the case, please slightly modify the sample IDs in both the mapping file and OTU table by adding any alphabet. So, for example, sample ID 1560.1 will become p1560.1.
 
+Also, please make sure that the mapping file has the same number of samples as the OTU tables, having the same sample IDs. If mapping file has more or less sample IDs than the samples in the OTU table, the script will crash.
+
 Output Explained
 ------
 
-The output of the script contains information for all of the OTUs tested. Currently, there are 26 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
+The output of the script contains information for all of the OTUs tested. Currently, there are 28 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
 
 1) **OTU_ID**: Indicates the OTU ID
 
@@ -105,3 +105,7 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 25) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
 
 26) **taxonomy**: Indicates the taxonomy/lineage of the specific OTU.
+
+27) **outlier_nbpval**: p-value of negative binomial model with outlier(s) filtered. An outlier for a specific OTU is defined as that count value for the OTU which is greater than 5 times the inter-quartile range of the OTU across all samples.
+
+28) **outlier_nbqval**: q-value of negative binomial model with outlier(s) filtered.
