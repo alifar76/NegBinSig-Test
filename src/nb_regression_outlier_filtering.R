@@ -42,11 +42,11 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
     zinb.coeff <- tryCatch(exp(summary(result.zinb)$coefficients$count[2,1]),error=function(e) NA)		# Column 5
     zinb.pval <- tryCatch(summary(result.zinb)$coefficients$count[2,4],error=function(e) NA)			# Column 6
 	aic.pois <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 7
-	aic.nb <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 8
-	aic.zinb <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 9
+	aic.nb <- tryCatch(AIC(result.nb),error=function(e) NA)											# Column 8
+	aic.zinb <- tryCatch(AIC(result.zinb),error=function(e) NA)											# Column 9
 	bic.pois <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 10
-	bic.nb <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 11
-	bic.zinb <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 12
+	bic.nb <- tryCatch(BIC(result.nb),error=function(e) NA)											# Column 11
+	bic.zinb <- tryCatch(BIC(result.zinb),error=function(e) NA)											# Column 12
   final_vec <- c(pois.coeff,pois.pval,nb.coeff, nb.pval, zinb.coeff, zinb.pval, aic.pois, aic.nb, aic.zinb, bic.pois, bic.nb, bic.zinb)						# Appended data from Columns 1-12
     
     shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)       # Significant p-value indicates data is not normally distributed. (Column 15)
