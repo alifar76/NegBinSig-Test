@@ -1,5 +1,6 @@
 #Rscript nb_regression_outlier_filtering.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2
 
+
 start.time <- Sys.time()
 
 library(pscl)
@@ -42,11 +43,11 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
     zinb.coeff <- tryCatch(exp(summary(result.zinb)$coefficients$count[2,1]),error=function(e) NA)		# Column 5
     zinb.pval <- tryCatch(summary(result.zinb)$coefficients$count[2,4],error=function(e) NA)			# Column 6
 	aic.pois <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 7
-	aic.nb <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 8
-	aic.zinb <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 9
+	aic.nb <- tryCatch(AIC(result.nb),error=function(e) NA)											# Column 8
+	aic.zinb <- tryCatch(AIC(result.zinb),error=function(e) NA)											# Column 9
 	bic.pois <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 10
-	bic.nb <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 11
-	bic.zinb <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 12
+	bic.nb <- tryCatch(BIC(result.nb),error=function(e) NA)											# Column 11
+	bic.zinb <- tryCatch(BIC(result.zinb),error=function(e) NA)											# Column 12
   final_vec <- c(pois.coeff,pois.pval,nb.coeff, nb.pval, zinb.coeff, zinb.pval, aic.pois, aic.nb, aic.zinb, bic.pois, bic.nb, bic.zinb)						# Appended data from Columns 1-12
     
     shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)       # Significant p-value indicates data is not normally distributed. (Column 15)
@@ -81,7 +82,19 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
 	bic.filt.nb <- tryCatch(BIC(glm.nb(newd ~ newmeta)),error=function(e) NA)														# Column 39
 	bic.filt.zinb <- tryCatch(BIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin")),error=function(e) NA)								# Column 40
 
-    final_vec <- c(final_vec,mean_diff,pval_ttest,shap_wilk_pval,heading,estimate_tab[1][[1]],names(estimate_tab)[1],estimate_tab[2][[1]],names(estimate_tab)[2],kwtest,valwarn.nb,zerotrt1,zerotrt2,nonzerotrt1,nonzerotrt2,totaltrt1,totaltrt2,mean.otu,var.otu,var.mean.ratio,newpval_pois,newpval_nb,newpval_zinb,aic.filt.pois,aic.filt.nb,aic.filt.zinb,bic.filt.pois,bic.filt.nb,bic.filt.zinb)			# 
+	bestmod <- c("Poisson","NB","ZINB")
+	all.aic.nonfilt <- c(aic.pois,aic.nb,aic.zinb)
+	all.bic.nonfilt <- c(bic.pois,bic.nb,bic.zinb)
+	all.aic.filt <- c(aic.filt.pois,aic.filt.nb,aic.filt.zinb)
+	all.bic.filt <- c(bic.filt.pois,bic.filt.nb,bic.filt.zinb)
+	
+	aic.nonfilt.best <- bestmod[which(all.aic.nonfilt == min(all.aic.nonfilt, na.rm=TRUE))][1]											# Column 41
+	bic.nonfilt.best <- bestmod[which(all.bic.nonfilt == min(all.bic.nonfilt, na.rm=TRUE))][1]											# Column 42
+	aic.filt.best <- bestmod[which(all.aic.filt == min(all.aic.filt, na.rm=TRUE))][1]													# Column 43
+	bic.filt.best <- bestmod[which(all.bic.filt == min(all.bic.filt, na.rm=TRUE))][1]													# Column 44
+	bestmodel <- c(aic.nonfilt.best,bic.nonfilt.best,aic.filt.best,bic.filt.best)
+
+    final_vec <- c(final_vec,mean_diff,pval_ttest,shap_wilk_pval,heading,estimate_tab[1][[1]],names(estimate_tab)[1],estimate_tab[2][[1]],names(estimate_tab)[2],kwtest,valwarn.nb,zerotrt1,zerotrt2,nonzerotrt1,nonzerotrt2,totaltrt1,totaltrt2,mean.otu,var.otu,var.mean.ratio,newpval_pois,newpval_nb,newpval_zinb,aic.filt.pois,aic.filt.nb,aic.filt.zinb,bic.filt.pois,bic.filt.nb,bic.filt.zinb,bestmodel)			# 
     final_vec
   }
   return (all_data)
@@ -113,9 +126,9 @@ final_steps <- function(otutable,mapfile,categ1,categ2,trt,outputname){
  nzrtrt2 <- paste("# of non-zeroes in ",categ2,sep="")
  tottrt1 <- paste("Total count in ",categ1,sep="")
  totttrt2 <- paste("Total count in ",categ2,sep="")
-  all_data <- cbind(otuids,all_data[,1:2],pois.qval,all_data[,3:4],nb.qval,all_data[,5:6],zinb.qval,all_data[,17],all_data[,19],all_data[,13],all_data[,14],ttest.qval,all_data[,21],kw.qval,all_data[,22:31],all_data[,15],taxlabels,all_data[,32],pois.filt.qval,all_data[,33],nb.filt.qval,all_data[,34],zinb.filt.qval,all_data[,7:12],all_data[,35:40])
-  colnames(all_data) <- c("OTU_IDs","Poiss_Coeff","Poiss_pval","Poiss_qval","NB_Coeff","NB_pval","NB_qval","ZINB_Coeff","ZINB_pval","ZINB_qval",mean1_head,mean2_head,difflabel,"ttest_pval","ttest_qval","KW_pval","KW_qval","NB_Coeff_Estimate_Error",zrtrt1,zrtrt2,nzrtrt1,nzrtrt2,tottrt1,totttrt2,"mean_otu","variance_otu","var/mean ratio","Shapiro_Wilk_Normality_pvalue","taxonomy","pois_filt_pval","pois_filt_qval","nb_filt_pval","nb_filt_qval","zinb_filt_pval","zinb_filt_qval","aic.pois", "aic.nb", "aic.zinb", "bic.pois", "bic.nb", "bic.zinb","aic.filt.pois","aic.filt.nb","aic.filt.zinb","bic.filt.pois","bic.filt.nb","bic.filt.zinb") #change Difference to groups being tested
-  write.table(as.matrix(all_data),file=outputname,sep="\t",append = TRUE,col.names=TRUE,row.names=FALSE,quote=FALSE)
+  all_data <- cbind(otuids,all_data[,1:2],pois.qval,all_data[,3:4],nb.qval,all_data[,5:6],zinb.qval,all_data[,17],all_data[,19],all_data[,13],all_data[,14],ttest.qval,all_data[,21],kw.qval,all_data[,22:31],all_data[,15],taxlabels,all_data[,32],pois.filt.qval,all_data[,33],nb.filt.qval,all_data[,34],zinb.filt.qval,all_data[,7:12],all_data[,35:44])
+  colnames(all_data) <- c("OTU_IDs","Poiss_Coeff","Poiss_pval","Poiss_qval","NB_Coeff","NB_pval","NB_qval","ZINB_Coeff","ZINB_pval","ZINB_qval",mean1_head,mean2_head,difflabel,"ttest_pval","ttest_qval","KW_pval","KW_qval","NB_Coeff_Estimate_Error",zrtrt1,zrtrt2,nzrtrt1,nzrtrt2,tottrt1,totttrt2,"mean_otu","variance_otu","var/mean ratio","Shapiro_Wilk_Normality_pvalue","taxonomy","pois_filt_pval","pois_filt_qval","nb_filt_pval","nb_filt_qval","zinb_filt_pval","zinb_filt_qval","aic.pois", "aic.nb", "aic.zinb", "bic.pois", "bic.nb", "bic.zinb","aic.filt.pois","aic.filt.nb","aic.filt.zinb","bic.filt.pois","bic.filt.nb","bic.filt.zinb","aic.nonfilt.best","bic.nonfilt.best","aic.filt.best","bic.filt.best") #change Difference to groups being tested
+  suppressWarnings(write.table(as.matrix(all_data),file=outputname,sep="\t",append = TRUE,col.names=TRUE,row.names=FALSE,quote=FALSE))
 }
 
 

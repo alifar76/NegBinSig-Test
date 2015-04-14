@@ -1,0 +1,13 @@
+f <- c(32900.75267,962.0211149,NA)
+f
+min(g)
+min(f)
+na.exclude(f)
+na.exclude(f)[1]
+na.exclude(f)[[1]]
+na.omit(f)
+min(f, na.rm=TRUE)
+which(min(f, na.rm=TRUE))
+which(f == min(f, na.rm=TRUE))
+bestmod <- c("Poisson","NB","ZINB")
+bestmod[which(f == min(f, na.rm=TRUE))]
