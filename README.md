@@ -51,7 +51,7 @@ Also, please make sure that the mapping file has the same number of samples as t
 Output Explained
 ------
 
-The output of the script contains information for all of the OTUs tested. Currently, there are 47 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
+The output of the script contains information for all of the OTUs tested. Currently, there are 51 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
 
 1) **OTU_ID**: Indicates the OTU ID
 
@@ -147,3 +147,11 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 46) **bic.filt.nb**: [Bayesian information criterion (BIC)] (http://en.wikipedia.org/wiki/Bayesian_information_criterion) value for negative binomial model with outlier(s) filtered.
 
 47) **bic.filt.zinb**: [Bayesian information criterion (BIC)] (http://en.wikipedia.org/wiki/Bayesian_information_criterion) value for zero inflated negative binomial model with outlier(s) filtered.
+
+48) **aic.nonfilt.best**: Column indicating which model is best (based on lowest AIC value) for a given OTU with no outliers filtered.
+
+49) **bic.nonfilt.best**: Column indicating which model is best (based on lowest BIC value) for a given OTU with no outliers filtered.
+
+50) **aic.filt.best**: Column indicating which model is best (based on lowest AIC value) for a given OTU with outliers filtered.
+
+51) **bic.filt.best**: Column indicating which model is best (based on lowest BIC value) for a given OTU with outliers filtered.
