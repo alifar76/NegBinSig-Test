@@ -106,7 +106,7 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 
 26) **variance_otu**: Variance across all treatment groups (both High and Low).
 
-27) **var/mean ratio**: Variance to mean ration across all treatment groups (such as High and Low).
+27) **var/mean ratio**: Variance to mean ratio across all treatment groups (such as High and Low).
 
 28) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
 
