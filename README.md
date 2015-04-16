@@ -16,6 +16,14 @@ explanatory variable is temperature, it must only contain two levels such as Hig
 
 Work is in progress to include comparisons for more than 2 levels and to create models in which multiple combinations of explanatory variables can be included.
 
+Required R packages
+------
+
+- [pscl](http://cran.r-project.org/web/packages/pscl/index.html)
+- [MASS](http://cran.r-project.org/web/packages/MASS/index.html)
+- [foreach](http://cran.r-project.org/web/packages/foreach/index.html)
+- [doMC](http://cran.r-project.org/web/packages/doMC/index.html)
+
 Running the script
 ------
 
