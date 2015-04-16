@@ -5,7 +5,7 @@ Background
 
 This is a simple script that performs negative binomial and zero-inflated negative binomial regression.
 
-The script is adjusted such that it can take in any OTU table file, generated via QIIME, (in tab-delimited format) as input and standard mapping/metadata file compatible with QIIME.
+The script is adjusted such that it can take in any OTU table file, generated via [QIIME 1.8.0 (stable public release)](http://qiime.org/), (in tab-delimited format) as input and standard mapping/metadata file compatible with QIIME.
 
 Presently, the script can only perform a single category comparison for variables. For example, if the metadata have two
 variables such as diet and antibiotic exposure, the script will have to be run seperately for each variable. A joint model
