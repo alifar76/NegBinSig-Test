@@ -3,7 +3,7 @@
 Background
 ------
 
-This is a simple script that performs negative binomial and zero-inflated negative binomial regression.
+This is a simple script that performs Poisson, negative binomial and zero-inflated negative binomial regression.
 
 The script is adjusted such that it can take in any OTU table file, generated via [QIIME 1.8.0 (stable public release)](http://qiime.org/), (in tab-delimited format) as input and standard mapping/metadata file compatible with QIIME.
 
