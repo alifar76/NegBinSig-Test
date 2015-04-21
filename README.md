@@ -3,9 +3,9 @@
 Background
 ------
 
-This is a simple script that performs negative binomial and zero-inflated negative binomial regression.
+This is a simple script that performs Poisson, negative binomial and zero-inflated negative binomial regression.
 
-The script is adjusted such that it can take in any OTU table file, generated via QIIME, (in tab-delimited format) as input and standard mapping/metadata file compatible with QIIME.
+The script is adjusted such that it can take in any OTU table file, generated via [QIIME 1.8.0 (stable public release)](http://qiime.org/), (in tab-delimited format) as input and standard mapping/metadata file compatible with QIIME.
 
 Presently, the script can only perform a single category comparison for variables. For example, if the metadata have two
 variables such as diet and antibiotic exposure, the script will have to be run seperately for each variable. A joint model
@@ -15,6 +15,14 @@ Furthermore, the script can only work with variables that that have two levels. 
 explanatory variable is temperature, it must only contain two levels such as High and Low for the script to run. 
 
 Work is in progress to include comparisons for more than 2 levels and to create models in which multiple combinations of explanatory variables can be included.
+
+Required R packages
+------
+
+- [pscl](http://cran.r-project.org/web/packages/pscl/index.html)
+- [MASS](http://cran.r-project.org/web/packages/MASS/index.html)
+- [foreach](http://cran.r-project.org/web/packages/foreach/index.html)
+- [doMC](http://cran.r-project.org/web/packages/doMC/index.html)
 
 Running the script
 ------
@@ -51,7 +59,7 @@ Also, please make sure that the mapping file has the same number of samples as t
 Output Explained
 ------
 
-The output of the script contains information for all of the OTUs tested. Currently, there are 47 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
+The output of the script contains information for all of the OTUs tested. Currently, there are 51 columns in the output file (called **ZINB_NB_Output_result.txt** in the example above) as generated via this script. The columns and their descriptions of the output file are as follows:
 
 1) **OTU_ID**: Indicates the OTU ID
 
@@ -106,7 +114,7 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 
 26) **variance_otu**: Variance across all treatment groups (both High and Low).
 
-27) **var/mean ratio**: Variance to mean ration across all treatment groups (such as High and Low).
+27) **var/mean ratio**: Variance to mean ratio across all treatment groups (such as High and Low).
 
 28) **Shapiro_Wilk_Normality_pvalue**: Indicates whether the data is normally distributed or not, informing us about the validity of using the t-test. A significant p-value in this column indicates that data are not normally distributed and t-test may not be that appropriate. 
 
@@ -147,3 +155,11 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 46) **bic.filt.nb**: [Bayesian information criterion (BIC)] (http://en.wikipedia.org/wiki/Bayesian_information_criterion) value for negative binomial model with outlier(s) filtered.
 
 47) **bic.filt.zinb**: [Bayesian information criterion (BIC)] (http://en.wikipedia.org/wiki/Bayesian_information_criterion) value for zero inflated negative binomial model with outlier(s) filtered.
+
+48) **aic.nonfilt.best**: Column indicating which model is best (based on lowest AIC value) for a given OTU with no outliers filtered.
+
+49) **bic.nonfilt.best**: Column indicating which model is best (based on lowest BIC value) for a given OTU with no outliers filtered.
+
+50) **aic.filt.best**: Column indicating which model is best (based on lowest AIC value) for a given OTU with outliers filtered.
+
+51) **bic.filt.best**: Column indicating which model is best (based on lowest BIC value) for a given OTU with outliers filtered.
