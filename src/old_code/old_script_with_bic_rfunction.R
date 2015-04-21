@@ -1,6 +1,8 @@
 #Rscript nb_regression_outlier_filtering.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2
 
+
 start.time <- Sys.time()
+
 library(pscl)
 library(MASS)
 library(foreach)
@@ -43,11 +45,9 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
 	aic.pois <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 7
 	aic.nb <- tryCatch(AIC(result.nb),error=function(e) NA)											# Column 8
 	aic.zinb <- tryCatch(AIC(result.zinb),error=function(e) NA)											# Column 9
-	
-	# BIC calculated by passing k=log(n) as argument to AIC because BIC function causing problems
-	bic.pois <- tryCatch(AIC(result.pois,k=log(length(both[,i]))),error=function(e) NA)											# Column 10	
-	bic.nb <- tryCatch(AIC(result.nb,k=log(length(both[,i]))),error=function(e) NA)											# Column 11
-	bic.zinb <- tryCatch(AIC(result.zinb,k=log(length(both[,i]))),error=function(e) NA)											# Column 12
+	bic.pois <- tryCatch(BIC(result.pois),error=function(e) NA)											# Column 10
+	bic.nb <- tryCatch(BIC(result.nb),error=function(e) NA)											# Column 11
+	bic.zinb <- tryCatch(BIC(result.zinb),error=function(e) NA)											# Column 12
   final_vec <- c(pois.coeff,pois.pval,nb.coeff, nb.pval, zinb.coeff, zinb.pval, aic.pois, aic.nb, aic.zinb, bic.pois, bic.nb, bic.zinb)						# Appended data from Columns 1-12
     
     shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)       # Significant p-value indicates data is not normally distributed. (Column 15)
@@ -78,9 +78,9 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
 	aic.filt.pois <- tryCatch(AIC(glm(newd ~ newmeta, family="poisson")),error=function(e) NA)										# Column 35
 	aic.filt.nb <- tryCatch(AIC(glm.nb(newd ~ newmeta)),error=function(e) NA)														# Column 36
 	aic.filt.zinb <- tryCatch(AIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin")),error=function(e) NA)								# Column 37
-	bic.filt.pois <- tryCatch(AIC(glm(newd ~ newmeta, family="poisson"),k=log(length(both[,i]))),error=function(e) NA)										# Column 38
-	bic.filt.nb <- tryCatch(AIC(glm.nb(newd ~ newmeta),k=log(length(both[,i]))),error=function(e) NA)														# Column 39
-	bic.filt.zinb <- tryCatch(AIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin"),k=log(length(both[,i]))),error=function(e) NA)								# Column 40
+	bic.filt.pois <- tryCatch(BIC(glm(newd ~ newmeta, family="poisson")),error=function(e) NA)										# Column 38
+	bic.filt.nb <- tryCatch(BIC(glm.nb(newd ~ newmeta)),error=function(e) NA)														# Column 39
+	bic.filt.zinb <- tryCatch(BIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin")),error=function(e) NA)								# Column 40
 
 	bestmod <- c("Poisson","NB","ZINB")
 	all.aic.nonfilt <- c(aic.pois,aic.nb,aic.zinb)
@@ -138,3 +138,4 @@ argv <- commandArgs(TRUE)
 registerDoMC(as.numeric(argv[7]))   #change the 4 to your number of CPU cores
 final_steps(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6])
 print (Sys.time() - start.time)
+
