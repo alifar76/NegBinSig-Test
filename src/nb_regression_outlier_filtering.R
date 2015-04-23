@@ -26,23 +26,23 @@ data_load <- function(MYdata,mapfile,treatment,trt1,trt2){
 
 zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
   all_data <- foreach(i=2:(length(rownames(MYdata))+1), .combine = rbind) %dopar% {
-    final_vec <- c()
-    formula1 <- as.formula(paste("both[,i] ~ ",trt," | 1",sep=""))
-    formula2 <- as.formula(paste("both[,i] ~ ",trt,sep=""))
-    result.pois <- tryCatch(glm(formula2, family="poisson", data = both),error=function(e) NA)
-    result.zinb <- tryCatch(zeroinfl(formula1, data = both, dist = "negbin"),error=function(e) NA)			
-    result.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA)    
+  final_vec <- c()
+  formula1 <- as.formula(paste("both[,i] ~ ",trt," | 1",sep=""))
+  formula2 <- as.formula(paste("both[,i] ~ ",trt,sep=""))
+  result.pois <- tryCatch(glm(formula2, family="poisson", data = both),error=function(e) NA)
+  result.zinb <- tryCatch(zeroinfl(formula1, data = both, dist = "negbin"),error=function(e) NA)			
+  result.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA)    
     
     
-    pois.coeff <- tryCatch(exp(summary(result.pois)$coefficients[2,1]),error=function(e) NA)			# Column 1
-    pois.pval <- tryCatch(summary(result.pois)$coefficients[2,4],error=function(e) NA)					# Column 2
-    nb.coeff <- tryCatch(exp(summary(result.nb)$coefficients[2,1]),error=function(e) NA)				# Column 3
-    nb.pval <- tryCatch(summary(result.nb)$coefficients[2,4],error=function(e) NA)						# Column 4
-    zinb.coeff <- tryCatch(exp(summary(result.zinb)$coefficients$count[2,1]),error=function(e) NA)		# Column 5
-    zinb.pval <- tryCatch(summary(result.zinb)$coefficients$count[2,4],error=function(e) NA)			# Column 6
-	aic.pois <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 7
-	aic.nb <- tryCatch(AIC(result.nb),error=function(e) NA)											# Column 8
-	aic.zinb <- tryCatch(AIC(result.zinb),error=function(e) NA)											# Column 9
+  pois.coeff <- tryCatch(exp(summary(result.pois)$coefficients[2,1]),error=function(e) NA)			# Column 1
+  pois.pval <- tryCatch(summary(result.pois)$coefficients[2,4],error=function(e) NA)					# Column 2
+  nb.coeff <- tryCatch(exp(summary(result.nb)$coefficients[2,1]),error=function(e) NA)				# Column 3
+  nb.pval <- tryCatch(summary(result.nb)$coefficients[2,4],error=function(e) NA)						# Column 4
+  zinb.coeff <- tryCatch(exp(summary(result.zinb)$coefficients$count[2,1]),error=function(e) NA)		# Column 5
+  zinb.pval <- tryCatch(summary(result.zinb)$coefficients$count[2,4],error=function(e) NA)			# Column 6
+  aic.pois <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 7
+  aic.nb <- tryCatch(AIC(result.nb),error=function(e) NA)											# Column 8
+  aic.zinb <- tryCatch(AIC(result.zinb),error=function(e) NA)											# Column 9
 	
 	# BIC calculated by passing k=log(n) as argument to AIC because BIC function causing problems
 	bic.pois <- tryCatch(AIC(result.pois,k=log(length(both[,i]))),error=function(e) NA)											# Column 10	
