@@ -53,17 +53,17 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
    shap_wilk_pval <- tryCatch(shapiro.test(both[,i])$p.value,error=function(e) NA)       # Significant p-value indicates data is not normally distributed. (Column 15)
    pval_ttest <- tryCatch(t.test(formula2, data=both)$p.value,error=function(e) NA)		# Column 14
    estimate_tab <- tryCatch(t.test(formula2, data=both)$estimate,error=function(e) NA)		# Column 17-20 drawn from this object
-    heading <- paste(gsub(" ","",strsplit(names(estimate_tab)[1],"mean in group")[[1]][2],fixed=TRUE),"_minus_",gsub(" ","",strsplit(names(estimate_tab)[2],"mean in group")[[1]][2],fixed=TRUE),"_mean",sep="")		# Column 16
-    mean_diff <- tryCatch((estimate_tab[1][[1]] - estimate_tab[2][[1]]),error=function(e) NA)			# Column 13
-    kwtest <- tryCatch(kruskal.test(formula2,data=both)$p.value,error=function(e) NA)					# Column 21
-    warn.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA,warning=function(w) w)		
-    valwarn.nb <- ifelse(class(warn.nb)[1] == "simpleWarning", 'yes', 'no')								# Column 22
-    trt1vals <- both[,i][which(as.vector(both[,trt]) == categ1)]
-    trt2vals <- both[,i][which(as.vector(both[,trt]) == categ2)]
-    zerotrt1 <- sum(trt1vals == 0)																		# Column 23
-    zerotrt2 <- sum(trt2vals == 0)																		# Column 24
-    nonzerotrt1 <- length(trt1vals) - zerotrt1															# Column 25
-    nonzerotrt2 <- length(trt2vals) - zerotrt2															# Column 26
+   heading <- paste(gsub(" ","",strsplit(names(estimate_tab)[1],"mean in group")[[1]][2],fixed=TRUE),"_minus_",gsub(" ","",strsplit(names(estimate_tab)[2],"mean in group")[[1]][2],fixed=TRUE),"_mean",sep="")		# Column 16
+   mean_diff <- tryCatch((estimate_tab[1][[1]] - estimate_tab[2][[1]]),error=function(e) NA)			# Column 13
+   kwtest <- tryCatch(kruskal.test(formula2,data=both)$p.value,error=function(e) NA)					# Column 21
+   warn.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA,warning=function(w) w)		
+   valwarn.nb <- ifelse(class(warn.nb)[1] == "simpleWarning", 'yes', 'no')								# Column 22
+   trt1vals <- both[,i][which(as.vector(both[,trt]) == categ1)]
+   trt2vals <- both[,i][which(as.vector(both[,trt]) == categ2)]
+   zerotrt1 <- sum(trt1vals == 0)																		# Column 23
+   zerotrt2 <- sum(trt2vals == 0)																		# Column 24
+   nonzerotrt1 <- length(trt1vals) - zerotrt1															# Column 25
+   nonzerotrt2 <- length(trt2vals) - zerotrt2															# Column 26
     totaltrt1 <- sum(trt1vals)																			# Column 27
     totaltrt2 <- sum(trt2vals)																			# Column 28
     mean.otu <- mean(both[,i])																			# Column 29
