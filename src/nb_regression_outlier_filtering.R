@@ -64,23 +64,23 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
    zerotrt2 <- sum(trt2vals == 0)																		# Column 24
    nonzerotrt1 <- length(trt1vals) - zerotrt1															# Column 25
    nonzerotrt2 <- length(trt2vals) - zerotrt2															# Column 26
-    totaltrt1 <- sum(trt1vals)																			# Column 27
-    totaltrt2 <- sum(trt2vals)																			# Column 28
-    mean.otu <- mean(both[,i])																			# Column 29
-    var.otu <- var(both[,i])																			# Column 30
-    var.mean.ratio <- var.otu/mean.otu																	# Column 31
-    newd <- both[,i][-(which(both[,i] > 5*IQR(both[,i])))]       # Select indices of values that are not greater than 5 times the IQR (i.e., values > 5*IQR will be removed)
-    treatment <- as.vector(both[,trt])
-    newmeta <- treatment[-(which(both[,i] > 5*IQR(both[,i])))]    # Select values greater than 5 times the IQR
-    newpval_pois <- tryCatch(summary(glm(newd ~ newmeta, family="poisson"))$coefficients[2,4],error=function(e) NA)		# Column 32
-    newpval_nb <- tryCatch(summary(glm.nb(newd ~ newmeta))$coefficients[2,4],error=function(e) NA)						# Column 33
-    newpval_zinb <-  tryCatch(summary(zeroinfl(newd ~ newmeta | 1, dist = "negbin"))$coefficients$count[2,4],error=function(e) NA)	# Column 34
-    aic.filt.pois <- tryCatch(AIC(glm(newd ~ newmeta, family="poisson")),error=function(e) NA)										# Column 35
-    aic.filt.nb <- tryCatch(AIC(glm.nb(newd ~ newmeta)),error=function(e) NA)														# Column 36
-    aic.filt.zinb <- tryCatch(AIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin")),error=function(e) NA)								# Column 37
-    bic.filt.pois <- tryCatch(AIC(glm(newd ~ newmeta, family="poisson"),k=log(length(both[,i]))),error=function(e) NA)										# Column 38
-    bic.filt.nb <- tryCatch(AIC(glm.nb(newd ~ newmeta),k=log(length(both[,i]))),error=function(e) NA)														# Column 39
-    bic.filt.zinb <- tryCatch(AIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin"),k=log(length(both[,i]))),error=function(e) NA)								# Column 40
+   totaltrt1 <- sum(trt1vals)																			# Column 27
+   totaltrt2 <- sum(trt2vals)																			# Column 28
+   mean.otu <- mean(both[,i])																			# Column 29
+   var.otu <- var(both[,i])																			# Column 30
+   var.mean.ratio <- var.otu/mean.otu																	# Column 31
+   newd <- both[,i][-(which(both[,i] > 5*IQR(both[,i])))]       # Select indices of values that are not greater than 5 times the IQR (i.e., values > 5*IQR will be removed)
+   treatment <- as.vector(both[,trt])
+   newmeta <- treatment[-(which(both[,i] > 5*IQR(both[,i])))]    # Select values greater than 5 times the IQR
+   newpval_pois <- tryCatch(summary(glm(newd ~ newmeta, family="poisson"))$coefficients[2,4],error=function(e) NA)		# Column 32
+   newpval_nb <- tryCatch(summary(glm.nb(newd ~ newmeta))$coefficients[2,4],error=function(e) NA)						# Column 33
+   newpval_zinb <-  tryCatch(summary(zeroinfl(newd ~ newmeta | 1, dist = "negbin"))$coefficients$count[2,4],error=function(e) NA)	# Column 34
+   aic.filt.pois <- tryCatch(AIC(glm(newd ~ newmeta, family="poisson")),error=function(e) NA)										# Column 35
+   aic.filt.nb <- tryCatch(AIC(glm.nb(newd ~ newmeta)),error=function(e) NA)														# Column 36
+   aic.filt.zinb <- tryCatch(AIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin")),error=function(e) NA)								# Column 37
+   bic.filt.pois <- tryCatch(AIC(glm(newd ~ newmeta, family="poisson"),k=log(length(both[,i]))),error=function(e) NA)										# Column 38
+   bic.filt.nb <- tryCatch(AIC(glm.nb(newd ~ newmeta),k=log(length(both[,i]))),error=function(e) NA)														# Column 39
+   bic.filt.zinb <- tryCatch(AIC(zeroinfl(newd ~ newmeta | 1, dist = "negbin"),k=log(length(both[,i]))),error=function(e) NA)								# Column 40
 
 	bestmod <- c("Poisson","NB","ZINB")
 	all.aic.nonfilt <- c(aic.pois,aic.nb,aic.zinb)
