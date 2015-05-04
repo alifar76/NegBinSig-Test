@@ -131,10 +131,8 @@ final_steps <- function(otutable,mapfile,categ1,categ2,trt,outputname){
   suppressWarnings(write.table(as.matrix(all_data),file=outputname,sep="\t",append = TRUE,col.names=TRUE,row.names=FALSE,quote=FALSE))
 }
 
-
-
+# Run functions using CLI
 argv <- commandArgs(TRUE)
-
 registerDoMC(as.numeric(argv[7]))   #change the 4 to your number of CPU cores
 final_steps(argv[1],argv[2],argv[3],argv[4],argv[5],argv[6])
 print (Sys.time() - start.time)
