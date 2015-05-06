@@ -6,7 +6,6 @@ library(MASS)
 library(foreach)
 library(doMC)
 
- 
 data_load <- function(MYdata,mapfile,treatment,trt1,trt2){    
   colnames(MYdata)
   MYmeta <- read.table(mapfile,header = T, sep = "\t", check.names = F, comment.char= "") #change Group header to Treatment
@@ -23,7 +22,6 @@ data_load <- function(MYdata,mapfile,treatment,trt1,trt2){
   both <- merge(mat.array,MYmeta,by.x=0,by.y="#SampleID")
 }
  
-
 zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
   all_data <- foreach(i=2:(length(rownames(MYdata))+1), .combine = rbind) %dopar% {
   final_vec <- c()
@@ -31,8 +29,7 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
   formula2 <- as.formula(paste("both[,i] ~ ",trt,sep=""))
   result.pois <- tryCatch(glm(formula2, family="poisson", data = both),error=function(e) NA)
   result.zinb <- tryCatch(zeroinfl(formula1, data = both, dist = "negbin"),error=function(e) NA)			
-  result.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA)    
-    
+  result.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA)
     
   pois.coeff <- tryCatch(exp(summary(result.pois)$coefficients[2,1]),error=function(e) NA)			# Column 1
   pois.pval <- tryCatch(summary(result.pois)$coefficients[2,4],error=function(e) NA)					# Column 2
