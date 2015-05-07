@@ -30,7 +30,6 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
   result.pois <- tryCatch(glm(formula2, family="poisson", data = both),error=function(e) NA)
   result.zinb <- tryCatch(zeroinfl(formula1, data = both, dist = "negbin"),error=function(e) NA)			
   result.nb <- tryCatch(glm.nb(formula2, data = both),error=function(e) NA)
-    
   pois.coeff <- tryCatch(exp(summary(result.pois)$coefficients[2,1]),error=function(e) NA)			# Column 1
   pois.pval <- tryCatch(summary(result.pois)$coefficients[2,4],error=function(e) NA)					# Column 2
   nb.coeff <- tryCatch(exp(summary(result.nb)$coefficients[2,1]),error=function(e) NA)				# Column 3
@@ -40,7 +39,6 @@ zinb_nb_test <- function(both,MYdata,trt,categ1,categ2){
   aic.pois <- tryCatch(AIC(result.pois),error=function(e) NA)											# Column 7
   aic.nb <- tryCatch(AIC(result.nb),error=function(e) NA)											# Column 8
   aic.zinb <- tryCatch(AIC(result.zinb),error=function(e) NA)											# Column 9
-	
   # BIC calculated by passing k=log(n) as argument to AIC because BIC function causing problems
   bic.pois <- tryCatch(AIC(result.pois,k=log(length(both[,i]))),error=function(e) NA)											# Column 10	
   bic.nb <- tryCatch(AIC(result.nb,k=log(length(both[,i]))),error=function(e) NA)											# Column 11
