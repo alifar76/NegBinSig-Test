@@ -3,7 +3,7 @@
 Background
 ------
 
-This is a simple script that performs Poisson, negative binomial and zero-inflated negative binomial regression.
+This is a simple script that performs Poisson, negative binomial and zero-inflated negative binomial regression. It also calculates AIC and BIC for each of the 3 models calculated, so the user can select the best model.
 
 The script is adjusted such that it can take in any OTU table file, generated via [QIIME 1.8.0 (stable public release)](http://qiime.org/), (in tab-delimited format) as input and standard mapping/metadata file compatible with QIIME.
 
@@ -27,7 +27,9 @@ Required R packages
 Running the script
 ------
 
-There are 3 scripts in the folder src. The one to use is called ```nb_regression_outlier_filtering.R```. The script is run via command line using the Rscript command (in terminal). To run the script, pass the command in following format:
+There is 1 script in the folder src. It is called ```nb_regression_outlier_filtering.R```. The script is run via command line using the Rscript command (in terminal). There are 3 scripts in the folder old_code but they can be ignored as they are just older versions, saved for trouble-shooting.
+
+To run the script, pass the command in following format:
 
 ```Rscript nb_regression_outlier_filtering.R high_vs_low_otu_table.txt high_low_mapfile.txt High Low Treatment ZINB_NB_Output_result.txt 2```
 
@@ -47,7 +49,7 @@ As seen from the command, the script takes in 7 commands. They are as follows:
 
 7) No. of cores to use. More cores on machine, faster the analysis will complete (which is **2** in the above example)
 
-Please ensure that all the 8 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
+Please ensure that all the 7 arguments are provided, in the correct order and format. Otherwise, the script will crash and cause problems.
 
 Input file format
 ------
