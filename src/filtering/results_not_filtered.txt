@@ -1,0 +1,37 @@
+Selected Model	OTU_IDs	High_minus_Low_mean	Significant Group	BIC value of Selected Model (Lowest)	q-value for selected model	taxonomy	# of 0's in High	# of 0's in Low	# of non-zeroes in High	# of non-zeroes in Low	Total count in High	Total count in Low
+NB	OTU_43333	2129.15875613748	High	1252.41593642472	0.0246277594970346	k__Bacteria: p__Firmicutes: c__Bacilli: o__Bacillales: f__Staphylococcaceae: g__Staphylococcus: s__aureus	0	0	26	47	92438	67029
+NB	OTU_65	-344.066284779051	Low	989.03224531999	0.00850807673678669	k__Bacteria: p__Firmicutes: c__Bacilli: o__Lactobacillales: f__Lactobacillaceae: g__Lactobacillus: s__	0	0	26	47	4431	24181
+NB	OTU_76	-519.18085106383	Low	823.218686394293	0.00041747750361995	k__Bacteria: p__Bacteroidetes: c__Bacteroidia: o__Bacteroidales: f__Prevotellaceae: g__Prevotella: s__	3	4	23	43	1859	27762
+NB	OTU_15259	-117.301145662848	Low	920.209890648356	0.0454575267482716	k__Bacteria: p__Proteobacteria: c__Betaproteobacteria: o__Neisseriales: f__Neisseriaceae: g__Neisseria: s__	0	0	26	47	3074	11070
+NB	OTU_44	411.730769230769	High	1050.31124381978	0.0312152740437968	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Pseudomonadales: f__Pseudomonadaceae: g__Pseudomonas: s__	0	0	26	47	19753	16356
+NB	OTU_1216	8.26513911620295	High	442.701767764978	0.0302398120968855	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Sphingomonadales: f__: g__: s__	4	11	22	36	346	237
+NB	OTU_2398	551.277414075287	High	1057.64768635375	0.0123971606835338	k__Bacteria: p__Firmicutes: c__Bacilli: o__Bacillales: f__Staphylococcaceae: g__Staphylococcus	0	0	26	47	23587	16728
+NB	OTU_1	1070.36006546645	High	1251.39788259669	0.0229353244448888	k__Bacteria: p__Firmicutes: c__Bacilli: o__Bacillales: f__Staphylococcaceae: g__Staphylococcus: s__	0	0	26	47	74038	83531
+NB	OTU_108	217.527004909984	High	954.791476577176	0.019812629738367	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Rhodobacterales: f__Rhodobacteraceae: g__Rubellimicrobium: s__	0	0	26	47	10240	8287
+NB	OTU_25144	618.761047463175	High	1043.47950651794	0.000638949389258828	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Enterobacteriales: f__Enterobacteriaceae: g__: s__	0	0	26	47	23630	13634
+NB	OTU_498	-32.8780687397709	Low	313.433018057899	1.75019007256356e-05	k__Bacteria: p__Actinobacteria: c__Coriobacteriia: o__Coriobacteriales: f__Coriobacteriaceae: g__: s__	20	22	6	25	17	1576
+NB	OTU_40862	-294.103109656301	Low	891.761603817824	0.00266328013208703	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Enterobacteriales: f__Enterobacteriaceae: g__Erwinia: s__	0	0	26	47	2334	18042
+NB	OTU_40	-769.464811783961	Low	1112.4582735602	0.00707825687013521	k__Bacteria: p__Actinobacteria: c__Actinobacteria: o__Actinomycetales: f__Micrococcaceae: g__Kocuria: s__palustris	0	0	26	47	9978	54202
+NB	OTU_14	-1400.7643207856	Low	1187.06105868052	0.00831775309718737	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Aeromonadales: f__Aeromonadaceae: g__: s__	0	0	26	47	17274	97062
+NB	OTU_8	4247.53191489362	High	1320.06707027424	3.85583334405845e-05	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Pseudomonadales: f__Pseudomonadaceae: g__Pseudomonas: s__	0	0	26	47	158886	87583
+NB	OTU_127	-285.647299509002	Low	961.628190771772	0.00239464663644725	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Rhizobiales: f__Brucellaceae: g__Ochrobactrum: s__	0	0	26	47	3247	19295
+NB	OTU_43735	1517.24140752864	High	1132.54780499872	1.75019007256356e-05	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Pseudomonadales: f__Pseudomonadaceae: g__Pseudomonas: s__	0	0	26	47	52071	22818
+NB	OTU_26343	-12.2774140752864	Low	279.737715119612	0.0040877132922414	k__Bacteria: p__Bacteroidetes: c__Bacteroidia: o__Bacteroidales: f__Bacteroidaceae: g__Bacteroides: s__	19	29	7	18	21	615
+NB	OTU_22880	56.0417348608838	High	760.432180288039	0.0251165332680553	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Enterobacteriales: f__Enterobacteriaceae: g__: s__	0	0	26	47	2673	2198
+NB	OTU_17848	-1416.35679214403	Low	972.426641021602	1.75019007256356e-05	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Enterobacteriales: f__Enterobacteriaceae: g__Serratia: s__marcescens	0	0	26	47	3930	73673
+NB	OTU_36	498.783960720131	High	1122.82972819985	0.0455964502364648	k__Bacteria: p__Proteobacteria: c__Betaproteobacteria: o__Burkholderiales: f__Oxalobacteraceae: g__: s__	0	0	26	47	28450	27986
+NB	OTU_1233	-63.0957446808511	Low	804.829238134541	0.00831775309718737	k__Bacteria: p__Firmicutes: c__Bacilli: o__Lactobacillales: f__Enterococcaceae: g__Enterococcus: s__	0	0	26	47	1261	5245
+NB	OTU_37035	20.1178396072013	High	673.261015743173	0.0269638612632606	k__Bacteria: p__Firmicutes: c__Bacilli: o__Bacillales: f__Planococcaceae: g__: s__	0	0	26	47	1344	1484
+NB	OTU_32115	-270.024549918167	Low	693.907984508692	0.000114899651400536	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Rhizobiales: f__Brucellaceae	5	5	21	42	708	13971
+NB	OTU_837	86.7864157119476	High	849.958431797696	0.0251165332680553	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Sphingomonadales: f__Sphingomonadaceae: g__: s__	0	0	26	47	4571	4184
+NB	OTU_1250	76.531914893617	High	783.894560708906	0.0451438259287431	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Xanthomonadales: f__Xanthomonadaceae: g__: s__	0	1	26	46	3510	2748
+NB	OTU_35751	113.524549918167	High	789.227691771714	0.000785413608719999	k__Bacteria: p__Firmicutes: c__Bacilli: o__Bacillales: f__Staphylococcaceae: g__Staphylococcus: s__	0	0	26	47	4271	2385
+NB	OTU_31	-1211.09492635025	Low	1119.85246982898	0.0040877132922414	k__Bacteria: p__Bacteroidetes: c__Flavobacteriia: o__Flavobacteriales: f__[Weeksellaceae]: g__Wautersiella: s__	0	0	26	47	11120	77023
+NB	OTU_53	-599.648936170213	Low	639.018755708787	0.0003412349951408	k__Bacteria: p__Chlamydiae: c__Chlamydiia: o__Chlamydiales: f__Rhabdochlamydiaceae: g__Candidatus Rhabdochlamydia: s__	7	16	19	31	897	29805
+NB	OTU_57	-984.653846153846	Low	970.908917817627	1.41167378242459e-09	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Alteromonadales: f__Shewanellaceae: g__Shewanella: s__	0	1	26	46	1855	49632
+NB	OTU_168	372.394435351882	High	684.227622151142	2.89980728769229e-05	k__Bacteria: p__Actinobacteria: c__Actinobacteria: o__Actinomycetales: f__Corynebacteriaceae: g__Corynebacterium: s__	4	4	22	43	10678	1800
+NB	OTU_22	890.391980360065	High	1163.49857856581	0.00831775309718737	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Rhizobiales: f__Methylobacteriaceae: g__Methylobacterium: s__	0	0	26	47	42227	34485
+NB	OTU_46481	51.537643207856	High	697.083075522667	0.0117311854933694	k__Bacteria: p__Firmicutes: c__Bacilli: o__Bacillales: f__Staphylococcaceae: g__Staphylococcus: s__	2	2	24	45	2115	1401
+NB	OTU_37123	-144.653027823241	Low	814.43480963424	0.00707825687013521	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Pseudomonadales: f__Pseudomonadaceae: g__Pseudomonas: s__stutzeri	1	1	25	46	1418	9362
+NB	OTU_277	382.645662847791	High	1021.32713945206	0.00707825687013521	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Pseudomonadales: f__Moraxellaceae: g__Acinetobacter: s__	0	0	26	47	16945	12647
+NB	OTU_23	440.5	High	706.600578976405	0.0246277594970346	k__Bacteria: p__Proteobacteria: c__Alphaproteobacteria: o__Rhizobiales: f__Bartonellaceae: g__: s__	4	8	22	39	14235	5029

@@ -1,0 +1,5 @@
+Selected Model	OTU_IDs	High_minus_Low_mean	Significant Group	BIC value of Selected Model (Lowest)	q-value for selected model	taxonomy	# of 0's in High	# of 0's in Low	# of non-zeroes in High	# of non-zeroes in Low	Total count in High	Total count in Low
+NB	OTU_161	23.9762684124386	High	654.91380651508	0.019558409100478	k__Bacteria: p__Firmicutes: c__Bacilli: o__Lactobacillales: f__: g__: s__	0	0	26	47	2091	2653
+NB	OTU_47540	6.30605564648118	High	274.011979450278	0.000475360748126455	k__Bacteria: p__Actinobacteria: c__Actinobacteria: o__Actinomycetales: f__Corynebacteriaceae: g__Corynebacterium: s__	5	19	21	28	258	170
+NB	OTU_14	-1400.7643207856	Low	1022.72928281235	0.0170499465393042	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Aeromonadales: f__Aeromonadaceae: g__: s__	0	0	26	47	17274	97062
+NB	OTU_57	-984.653846153846	Low	817.018327297779	0.0417745111450389	k__Bacteria: p__Proteobacteria: c__Gammaproteobacteria: o__Alteromonadales: f__Shewanellaceae: g__Shewanella: s__	0	1	26	46	1855	49632
