@@ -1,7 +1,6 @@
 import os
 from decimal import *
 
-
 def zero_check(checkv,dictn):
 	val = [Decimal(checkv)]
 	result = [x/abs(x) for x in val if x !=0]
