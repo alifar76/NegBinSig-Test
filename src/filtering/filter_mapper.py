@@ -47,6 +47,3 @@ filter_results("../ZINB_NB_Output_result.txt","results_filtered.txt",0.05,filtin
 notfilt = [38,41]			# Indices of BIC values with outliers not filtered
 qvalnonfilt = [3,6,9]		# Indices of q-values of 3 models with outliers not filtered
 filter_results("../ZINB_NB_Output_result.txt","results_not_filtered.txt",0.05,notfilt,qvalnonfilt)
-
-
-
