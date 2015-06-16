@@ -27,7 +27,7 @@ Required R packages
 Running the script
 ------
 
-There is 1 script in the folder src. It is called ```nb_regression_outlier_filtering.R```. The script is run via command line using the Rscript command (in terminal). There are 3 scripts in the folder old_code but they can be ignored as they are just older versions, saved for trouble-shooting.
+There is 1 script in the folder ```src```. It is called ```nb_regression_outlier_filtering.R```. The script is run via command line using the Rscript command (in terminal). There are 3 scripts in the folder ```old_code``` but they can be ignored as they are just older versions, saved for trouble-shooting. There is also an additional Python script in the ```filtering```. It is called ```filter_mapper.py```. It is to be used to further results by lowest BIC of the 3 models tested and a user-defined q-value threshold.
 
 To run the script, pass the command in following format:
 
