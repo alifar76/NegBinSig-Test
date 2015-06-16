@@ -26,12 +26,15 @@ def filter_results(iname,outname,qval,filtinds,qvals):
 				newc = filter(lambda a: a != 'NA', spline[filtinds[0]:filtinds[1]])					# Remove NAs from BIC values using lambda expression
 				minbic = str(min([Decimal(e) for e in newc]))										# Convert the values to decimals and obtain the minimum value
 				indexic = spline[filtinds[0]:filtinds[1]].index(minbic)								# Index of lowest value of BIC of filtered values
-				if (indexic == 0) and (Decimal(spline[qvals[0]]) < qval):									# Filter OTUs with Poisson q-value less than 0.05
-					outfile.write("Poisson"+"\t"+spline[0]+"\t"+spline[12]+"\t"+zero_check(spline[12],grps)+"\t"+spline[filtinds[0]]+"\t"+spline[qvals[0]]+"\t"+spline[28]+"\t"+'\t'.join(spline[18:24])+"\n")
-				if (indexic == 1) and (Decimal(spline[qvals[1]]) < qval):									# Filter OTUs with NB q-value less than 0.05
-					outfile.write("NB"+"\t"+spline[0]+"\t"+spline[12]+"\t"+zero_check(spline[12],grps)+"\t"+spline[filtinds[0]+1]+"\t"+spline[qvals[1]]+"\t"+spline[28]+"\t"+'\t'.join(spline[18:24])+"\n")
-				if (indexic == 2) and (Decimal(spline[qvals[2]]) < qval):									# Filter OTUs with ZINB q-value less than 0.05
-					outfile.write("ZINB"+"\t"+spline[0]+"\t"+spline[12]+"\t"+zero_check(spline[12],grps)+"\t"+spline[filtinds[0]+2]+"\t"+spline[qvals[2]]+"\t"+spline[28]+"\t"+'\t'.join(spline[18:24])+"\n")
+				if spline[qvals[2]] != 'NaN':
+					if (indexic == 0) and (Decimal(spline[qvals[0]]) < qval):									# Filter OTUs with Poisson q-value less than 0.05
+						outfile.write("Poisson"+"\t"+spline[0]+"\t"+spline[12]+"\t"+zero_check(spline[12],grps)+"\t"+spline[filtinds[0]]+"\t"+spline[qvals[0]]+"\t"+spline[28]+"\t"+'\t'.join(spline[18:24])+"\n")
+				if spline[qvals[2]] != 'NaN':
+					if (indexic == 1) and (Decimal(spline[qvals[1]]) < qval):									# Filter OTUs with NB q-value less than 0.05
+						outfile.write("NB"+"\t"+spline[0]+"\t"+spline[12]+"\t"+zero_check(spline[12],grps)+"\t"+spline[filtinds[0]+1]+"\t"+spline[qvals[1]]+"\t"+spline[28]+"\t"+'\t'.join(spline[18:24])+"\n")
+				if spline[qvals[2]] != 'NaN':
+					if (indexic == 2) and (Decimal(spline[qvals[2]]) < qval):									# Filter OTUs with ZINB q-value less than 0.05
+						outfile.write("ZINB"+"\t"+spline[0]+"\t"+spline[12]+"\t"+zero_check(spline[12],grps)+"\t"+spline[filtinds[0]+2]+"\t"+spline[qvals[2]]+"\t"+spline[28]+"\t"+'\t'.join(spline[18:24])+"\n")
 	outfile.close()
 	return outfile
 
