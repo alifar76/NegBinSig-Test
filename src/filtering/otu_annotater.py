@@ -26,9 +26,6 @@ def level_namer(num,hierarchy,test,listn):
 			num = num - 1
 			return level_namer(num,hierarchy,test,listn)
 
-
-
-
 def main_function(f,outn):
 	otudict = {}
 	infile = open(f,'rU')
@@ -46,19 +43,10 @@ def main_function(f,outn):
 	outfile.close()
 	return outfile
 
-
-
-
 main_function("results_not_filtered.txt","OTU_annotations.txt")
-
-
-
 
 #tests = ["k__Bacteria: p__Firmicutes: c__Clostridia: o__Clostridiales: f__: g__: s__",
 #"k__Bacteria: p__Proteobacteria: c__Betaproteobacteria: o__Burkholderiales: f__Comamonadaceae: g__: s__",
 #"k__Bacteria: p__Armatimonadetes: c__[Fimbriimonadia]: o__[Fimbriimonadales]: f__[Fimbriimonadaceae]: g__Fimbriimonas: s__"]
-
 #for test in tests:
 #	print level_namer(-1,hierarchy,test,[])
-
-
