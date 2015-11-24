@@ -165,3 +165,10 @@ in our example dataset, OTU_26 has a NB_Coeff value of 1.329890281. This means t
 50) **aic.filt.best**: Column indicating which model is best (based on lowest AIC value) for a given OTU with outliers filtered.
 
 51) **bic.filt.best**: Column indicating which model is best (based on lowest BIC value) for a given OTU with outliers filtered.
+
+Bonus
+------
+
+This script is being included as part of a larger pipeline, I'm developing called [biological-convergence] (https://github.com/alifar76/biological-convergence). Since the output of this script produces too many columns, there is some additional filtering done based on user specified values to produce a more manageable file.
+
+That manageable file, with far fewer columns, will be produced by the [biological-convergence] (https://github.com/alifar76/biological-convergence) pipeline and will look like [this file](https://github.com/alifar76/biological-convergence/blob/master/src/output_bio_convergence/neg_bin_sig_output_Lean_Not_Lean.txt). Users can, therefore, run that pipeline to get this analysis done.
